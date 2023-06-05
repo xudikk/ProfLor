@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{% static 'otp/otp.css' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js">
+
+  <title>Validation Phone</title>
+</head>
+<body  style="background-image: 	url({% static 'site/img/hero.jpg' %});">
+  <form action="" method="post">
+    {% csrf_token %}
+  <div class="container height-100 d-flex justify-content-center align-items-center">
+    <div class="position-relative"> <div class="card p-2 text-center">
+      <h6>Maxsus kodni kiriting! ({{ request.session.otp }}) </h6>
+      <div> <span>Code</span> <small>*** ** *** {{ hide  }}</small> raqamiga yuborildi </div>
+      <div style="color: red;"> {{ error }}</div>
+
+      <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
+        <input class="m-2 text-center form-control rounded" name="otp" type="text" id="first" maxlength="1" />
+        <input class="m-2 text-center form-control rounded" name="otp" type="text" id="second" maxlength="1" />
+        <input class="m-2 text-center form-control rounded" name="otp" type="text" id="third" maxlength="1" />
+        <input class="m-2 text-center form-control rounded" name="otp" type="text" id="fourth" maxlength="1" />
+        <input class="m-2 text-center form-control rounded" name="otp" type="text" id="fifth" maxlength="1" />
+        <input class="m-2 text-center form-control rounded" name="otp" type="text" id="sixth" maxlength="1" />
+      </div>
+      <div class="mt-4"> <button class="btn btn-danger px-4 validate" type="submit">Validate</button>
+      </div>
+      </div>
+<!--        <div class="card-2">-->
+<!--          <div class="content d-flex justify-content-center align-items-center">-->
+<!--          <span>Code bormadimi?</span> <a href="" class="text-decoration-none ms-3">Boshqatdan yuborish</a>-->
+<!--          </div>-->
+<!--        </div>-->
+
+        {% if error %}
+        <div class="card-2">
+          <div class="content d-flex justify-content-center align-items-center">
+            <span><a href="{% url 'otp-new' status=1 %}" class="text-decoration-none ms-3">Yangi Kod yuborish</a></span>
+          </div>
+        </div>
+
+        {% endif %}
+
+    </div>
+    </div>
+  </form>
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+
+    function OTPInput() {
+    const inputs = document.querySelectorAll('#otp > *[id]');
+    for (let i = 0; i < inputs.length; i++) { inputs[i].addEventListener('keydown', function(event) { if (event.key==="Backspace" ) { inputs[i].value='' ; if (i !==0) inputs[i - 1].focus(); } else { if (i===inputs.length - 1 && inputs[i].value !=='' ) { return true; } else if (event.keyCode> 47 && event.keyCode < 58) { inputs[i].value=event.key; if (i !==inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); } else if (event.keyCode> 64 && event.keyCode < 91) { inputs[i].value=String.fromCharCode(event.keyCode); if (i !==inputs.length - 1) inputs[i + 1].focus(); event.preventDefault(); } } }); } } OTPInput();
+
+
+    });
+  </script>
+
+</body>
+</html>
+
+
+
+

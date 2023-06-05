@@ -1,0 +1,83 @@
+{% extends 'dashboard/base.html' %}
+{% block title %} Dashboard | Contact {% endblock %}
+
+{% load static %}
+{% load bootstrap4 %}
+{% block content %}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-info">
+            <form class="form" method="post" id="form-profession" enctype="multipart/form-data" novalidate>
+
+                {% csrf_token %}
+                <div class="card-body">
+                    <h2 class="form-group text-center">Contactni Tahrirlash</h2>
+                    {% if success %}
+                    <h3 class="form-group text-center text-success">Muaffaqiyatli o'zgartirildi!</h3>
+                    {% else %}
+                    <h3 class="form-group text-center">Siz faqatgina bitta contactdan foydalana olasiz olasiz!</h3>
+                    {% endif %}
+                    <div class="form-row">
+
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.phone %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.email %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.location %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.address_uz %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.address_ru %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.address_en %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.instagram %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.telegram %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.youtube %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.facebook %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.twitter %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.ok %}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="card-action right-align">
+                              <button type="submit" class="btn btn-block btn-success">
+                                <i class="fas fa-check"></i>O'zgarishlarni Saqlash
+                              </button>
+                        </div>
+                        <a href="{% url 'dash_home' %}">
+                            <div class="card-action ml-1 right-align">
+                                  <button type="button" class="btn btn-block btn-info">
+                                        <i class="fas fa-home"></i> Bosh menu
+                                  </button>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

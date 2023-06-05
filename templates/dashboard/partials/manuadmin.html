@@ -1,0 +1,37 @@
+
+
+
+<!-- Nav Item - Pages Collapse Menu -->
+
+<li class="nav-item">
+    <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+        aria-expanded="true" aria-controls="collapseTwo">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Dashboard menu</span>
+    </a>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Komponentalar</h6>
+            <a class="collapse-item text-center" href="{% url 'dashboard-contact' %}">Contact Boshqaruvi</a>
+            <a class="collapse-item text-center" href="">Bemorlar</a>
+        </div>
+    </div>
+</li>
+<!-- Nav Item - Pages Collapse Menu -->
+
+<li class="nav-item">
+    <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseq"
+        aria-expanded="true" aria-controls="collapseq">
+        <i class="fas fa-fw fa-cog"></i>
+        <span>Sayt Menu</span>
+    </a>
+    <div id="collapseq" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Komponentalar</h6>
+            <a class="collapse-item text-center" href="{% url 'dashboard-auto-list' key='new' %}">Yangiliklar boshqaruvi</a>
+            <a class="collapse-item text-center" href="{% url 'dashboard-auto-list' key='doc' %}">Doctorlar</a>
+            <a class="collapse-item text-center" href="">Foydalanuvchi otzivlari</a>
+
+        </div>
+    </div>
+</li>
