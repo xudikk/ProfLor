@@ -1,0 +1,252 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}New Interested | View {% endblock %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+
+{% if pos == 'one' %}
+
+
+<div class="card mb-4 border-left-warning">
+    <div class="card-body">
+        <h4>Sarlavha (uzbek): <mark><i>{{ root.title_uz }}</i></mark></h4>
+    </div>
+</div>
+<div class="card mb-4 border-left-warning">
+    <div class="card-body">
+        <h4>Sarlavha (rus): <mark><i>{{ root.title_ru }}</i></mark></h4>
+    </div>
+</div>
+<div class="card mb-4 border-left-warning">
+    <div class="card-body">
+        <h4>Sarlavha (eng): <mark><i>{{ root.title_en }}</i></mark></h4>
+    </div>
+</div>
+<div class="card mb-4 border-left-warning">
+    <div class="card-body">
+        <h4>Qisqacha matn (uzbek): <mark><i>{{ root.shortdesc_uz }}</i></mark></h4>
+    </div>
+</div>
+<div class="card mb-4 border-left-warning">
+    <div class="card-body">
+        <h4>Qisqacha matn (rus): <mark><i>{{ root.shortdesc_ru }}</i></mark></h4>
+    </div>
+</div>
+<div class="card mb-4 border-left-warning">
+    <div class="card-body">
+        <h4>Qisqacha matn (eng): <mark><i>{{ root.shortdesc_en }}</i></mark></h4>
+    </div>
+</div>
+<div class="card mb-4 border-left-warning">
+    <div class="card-body">
+        <h4>To'lliq matn (uzbek): <mark><i>{{ root.desc_uz }}</i></mark></h4>
+    </div>
+</div>
+
+<div class="card mb-4 border-left-warning">
+    <div class="card-body">
+        <h4>To'lliq matn (rus): <mark><i>{{ root.desc_ru }}</i></mark></h4>
+    </div>
+</div>
+
+<div class="card mb-4 border-left-warning">
+    <div class="card-body">
+        <h4>To'lliq matn (uzbek): <mark><i>{{ root.desc_en }}</i></mark></h4>
+    </div>
+</div>
+
+<div class="card mb-4 border-left-warning">
+    <div class="card-body">
+        <h4>Yangilik qo'shilgan vaqt:  <mark><i> {{ root.date | date:'d-F, Y ' }} Year {{ root.date | time:'H:i' }}</i></mark></h4>
+    </div>
+</div>
+
+<div class="card mb-4 border-left-warning">
+    <div class="card-body">
+        <h4>Rasm: <img src="{{ root.img.url }}" alt="Rasm topilmadi!" width="900px"></h4>
+    </div>
+</div>
+
+<div class="card mb-4 border-bottom-warning">
+    <div class="card-body">
+        <a href="{% url 'dashboard-auto-edit' key='new' pk=root.id %}" class="btn btn-success btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-edit"></i>
+            </span>
+            <span class="text">Tahrirlash</span>
+        </a>
+        <a href="{% url 'dashboard-auto-list' key='new' %}" class="btn btn-warning btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-arrow-left"></i>
+            </span>
+            <span class="text">Listlarga qaytish</span>
+        </a>
+        <a href="{% url 'home' %}" class="btn btn-info btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-home"></i>
+            </span>
+            <span class="text">Bosh Menu</span>
+        </a>
+    </div>
+</div>
+
+
+{% elif pos == 'form' %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-info">
+            <form class="form" method="post" id="form-profession" enctype="multipart/form-data" novalidate>
+
+                {% csrf_token %}
+                <div class="card-body">
+                    <h2 class="form-group text-center">Yangiliklar formasi</h2>
+                    <div class="form-row">
+
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.title_uz %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.title_ru %}
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.title_en %}
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.shortdesc_uz %}
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.shortdesc_ru %}
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.shortdesc_en %}
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.desc_uz %}
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.desc_ru %}
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.desc_en %}
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.img %}
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="card-action right-align">
+                              <button type="submit" class="btn btn-block btn-success">
+                                <i class="fas fa-check"></i>O'zgarishlarni Saqlash
+                              </button>
+                        </div>
+                        <a href="{% url 'dashboard-auto-list' key='new' %}">
+                            <div class="card-action ml-1 right-align">
+                                  <button type="button" class="btn btn-block btn-info">
+                                        <i class="fas fa-home"></i> Yangiliklar listiga qaytish
+                                  </button>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% else %}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-warning">Yangiliklar</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Title(uz)</th>
+                        <th>Title(uz)</th>
+                        <th>Title(en)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in roots %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ i.title_uz }}</td>
+                        <td>{{ i.title_ru }}</td>
+                        <td>{{ i.title_en }}</td>
+                        <td>
+                            <a href="{% url 'dashboard-auto-detail' key='new' pk=i.id %}" title="To'lliq ma'lumotlarni ko'rish" class="btn btn-info btn-circle btn-sm">
+                                <i class="fas fa-info-circle"></i>
+                            </a>
+                            <a href="{% url 'dashboard-auto-edit' key='new' pk=i.id %}" title="O'zgartirish" class="btn btn-warning btn-circle btn-sm">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                        </td>
+                    </tr>
+                   {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if roots.has_previous %}
+                    <a href="?page=1" class="btn btn-primary btn-sm">&laquo;first</a>
+                    <a href="?page={{ news.previous_page_number }}"  class="btn btn-primary btn-sm">prev</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ roots.number }} of {{ roots.paginator.num_pages }}.
+                </span>
+
+                {% if roots.has_next %}
+                    <a href="?page={{ roots.next_page_number }}" class="btn btn-primary btn-sm">next</a>
+                    <a href="?page={{ roots.paginator.num_pages }}" class="btn btn-primary btn-sm">last&raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-xl-6 col-md-6 mb-4">
+                <a href="{% url 'dashboard-auto-add' key='new' %}" class="btn btn-success btn-icon-split" >
+                    <span class="icon text-white-50">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    <span class="text">Yangilik qo'shish</span>
+                </a>
+                <a href="{% url 'home' %}"  class="btn btn-info btn-icon-split" >
+                   <span class="icon text-white-50">
+                        <i class="fas fa-home"></i>
+                    </span>
+                    <span class="text">Bosh Menu</span>
+               </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endif %}
+{% endblock %}

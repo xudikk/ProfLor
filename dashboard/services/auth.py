@@ -7,22 +7,22 @@ from methodism import generate_key, code_decoder
 
 from base.helper import check_otp
 from dashboard.models.auth import Otp, User
-
+from datetime import datetime
 
 def sign_in(requests):
     if not requests.user.is_anonymous:
-        return redirect('dash_home')
+        return redirect('home')
     ctx = {}
     if requests.POST:
         password = requests.POST.get('pass')
 
         user = User.objects.filter(email='admin').first()
         if not user:
-            ctx["error"] = True
+            ctx["error"] = "Uzur user aniqlanmadi"
             return render(requests, 'dashboard/auth/login.html', ctx)
-
+        print(user)
         if not user.check_password(password):
-            ctx["error"] = True
+            ctx["error"] = "Parol Xato!!"
             return render(requests, 'dashboard/auth/login.html', ctx)
 
         otp = random.randint(100000, 999999)
@@ -92,7 +92,7 @@ def otp(requests, status=None):
             login(requests, user)
             del requests.session['token']
             del requests.session['st']
-            return redirect('dash_home')
+            return redirect('home')
 
     requests.session['st'] = 'otp'
     return render(requests, 'dashboard/auth/step-one.html')

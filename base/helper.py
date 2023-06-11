@@ -1,9 +1,11 @@
 import base64
 import binascii
-import os
-from datetime import datetime, timezone
+from datetime import datetime
 
-from dashboard.models.auth import Otp
+import cv2
+import os
+
+from src.settings import BASE_DIR, MEDIA_PATIENTS
 
 
 def code_hashing(key: str, decode=False):
@@ -46,3 +48,35 @@ def card_mask(number):
     return number[0:4] + ' **** **** ' + number[12:16]
 
 
+def ImageGenerator(fio: str, age, dignoz, suggests: list):
+    path = BASE_DIR.absolute().__str__() + r'\media\blank.png'
+    image = cv2.imread(path)
+    font = cv2.FONT_ITALIC
+    fontScale = 0.6
+
+    color = (0, 0, 0)
+    thickness = 1
+
+    symbols = (u"абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯқҚ ",
+               u"abvgdeejziyklmnoprstufhzcss_y_euaABVGDEEJZIYKLMNOPRSTUFHZCSS_Y_EUAqQ ")
+
+    tr = {ord(a): ord(b) for a, b in zip(*symbols)}
+    image = cv2.putText(image, fio.translate(tr), (250, 255), font,
+                        fontScale, color, thickness, cv2.LINE_AA)
+
+    image = cv2.putText(image, str(age), (150, 285), font,
+                        fontScale, color, thickness, cv2.LINE_AA)
+
+    image = cv2.putText(image, dignoz.translate(tr),
+                        (200, 310), font, 0.6, color, thickness, cv2.LINE_AA)
+    step = 360
+    for i, j in enumerate(suggests, 1):
+        word = f"{i}) {j}"
+        image = cv2.putText(image, word.translate(tr),
+                            (100, step), font, 0.5, color, thickness, cv2.LINE_AA)
+        step += 20
+    date = datetime.now().strftime(f"%d-%m-%Y-%M")
+    filename = date + fio.replace(' ', '') + ".jpg"
+    cv2.imwrite(os.path.join(MEDIA_PATIENTS, filename), image)
+
+    return BASE_DIR.absolute().__str__() + filename

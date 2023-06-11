@@ -63,3 +63,25 @@ def auto_form(requests, key, pk=None):
         "pos": 'form'
     }
     return render(requests, f'dashboard/pages/{key}.html', ctx)
+
+
+@login_required(login_url='sign-in')
+def auto_del(requests, key, pk):
+    try:
+        Model = {
+            "doc": "Doctor",
+            "new": "New"
+        }[key]
+    except:
+        return render(requests, 'dashboard/base.html', {"error": 404})
+
+    root = eval(Model).objects.filter(pk=pk).first()
+    if not root:
+        ctx = {"error": 404}
+        return render(requests, f'dashboard/pages/{key}.html', ctx)
+    root.delete()
+    return redirect('dashboard-auto-list', key=key)
+
+
+
+

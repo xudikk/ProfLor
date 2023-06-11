@@ -17,3 +17,33 @@ class Doctor(models.Model):
 
     def __str__(self):
         return self.FIO
+
+
+class Patients(models.Model):
+    FIO = models.CharField('FIO', max_length=128)
+    birth = models.IntegerField("Tug'ulgan yili")
+
+    def __str__(self):
+        return self.FIO
+
+
+class Diagnoz(models.Model):
+    patient = models.ForeignKey(Patients, on_delete=models.CASCADE)
+    name = models.CharField(max_length=512)
+    img = models.ImageField(null=True, blank=True, upload_to='diagnoz')
+
+    def __str__(self):
+        return f"{self.patient.FIO} | {self.name}"
+
+
+class Tablets(models.Model):
+    name = models.CharField("Nomi", max_length=128)
+    type = models.CharField("Turi", max_length=50, choices=[
+        ('Tomchi', 'Tomchi'),
+        ('Tabletka', 'Tabletka'),
+        ('Sirop', 'Sirop'),
+    ])
+
+
+class Suggests(models.Model):
+    diagnoz = models.ForeignKey(Diagnoz, on_delete=models.CASCADE)
