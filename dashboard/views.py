@@ -3,6 +3,7 @@ from django.shortcuts import render
 
 # Create your views here.
 # from base.helper import ImageGenerator
+from base.helper import cnts
 
 
 @login_required(login_url='sign-in')
@@ -15,7 +16,9 @@ def index(request):
     #  ]
     # ImageGenerator("Eshmatjon Toshmatbekov", 2028, "Oyoqlardan ayrilding", l)
 
-    ctx = {}
+    ctx = {
+        'cnts': cnts()
+    }
     return render(request, 'dashboard/pages/index.html', ctx)
 
 

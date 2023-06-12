@@ -1,0 +1,341 @@
+{% extends 'dashboard/base.html' %}
+
+{% block title %}Doctors | View {% endblock %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+
+{% if pos == 'one' %}
+
+<div class="content-wrapper">
+
+
+<div class="card mb-4 border-left-warning">
+    <div class="card-body">
+        <h4>Nomi: <mark><i>{{ root.FIO }}</i></mark></h4>
+    </div>
+</div>
+<div class="card mb-4 border-left-warning">
+    <div class="card-body">
+        <h4>Turi: <mark><i>{{ root.birth }}</i></mark></h4>
+    </div>
+</div>
+
+
+
+<!--    **********************************************************************************************************  -->
+    <hr class="border-warning" >
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-info">Bemorga qoyilgan Tashhislar</h6>
+        </div>
+        {% if diags %}
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Diagnoz</th>
+                            <th>Sana</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in diags %}
+                        {% if i.id != request.session.user %}
+
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ i.name }}</td>
+                            <td>{{ i.date | date:'d-F, Y' }} Year</td>
+
+                            <td>
+                                <a href="" title="Tashisni tahrirlash" class="btn btn-success btn-circle btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="" title="Tashhis haqida" class="btn btn-info btn-circle btn-sm">
+                                    <i class="fas fa-info"></i>
+                                </a>
+                                <a href="" title="Tashhisni ob tashash" class="btn btn-danger btn-circle btn-sm">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endif %}
+                       {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% else %}
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-danger">Ushbu Bemorga Hech qanday tashhis qo'yilmagan</h6>
+            </div>
+        {% endif %}
+    </div>
+
+<!--    **********************************************************************************************************  -->
+
+
+
+
+
+
+
+
+<div class="card mb-4 border-bottom-warning">
+    <div class="card-body">
+        <a href="{% url 'dashboard-patient-edit' pk=root.id %}" class="btn btn-success btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-edit"></i>
+            </span>
+            <span class="text">Tahrirlash</span>
+        </a>
+        <a href="{% url 'dashboard-patient-list' %}" class="btn btn-warning btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-arrow-left"></i>
+            </span>
+            <span class="text">Listlarga qaytish</span>
+        </a>
+        <a data-toggle="modal" data-target="#deleteModal" class="btn btn-danger btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-trash"></i>
+            </span>
+            <span class="text">O'chirish</span>
+        </a>
+        <a href="{% url 'home' %}" class="btn btn-info btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-home"></i>
+            </span>
+            <span class="text">Bosh Menu</span>
+        </a>
+    </div>
+</div>
+
+
+</div>
+
+<!-- Delete Modal-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Chiqish so'rovi</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Ro'stdan ham ushbu {{ root.FIO }} ni o'chirmoqchimisz?</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Yo'q</button>
+                <a class="btn btn-primary" href="{% url 'dashboard-patient-delete' pk=root.id %}">Ha</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% elif pos == 'form' %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Forma</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Form</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-success">
+              <div class="card-header">
+                <h3 class="card-title">Tezkor Forma</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="card-body">
+                    <h2 class="form-group text-center">Bemorlar formasi</h2>
+                    <div class="form-row">
+
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.FIO %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.birth %}
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                    <div class="form-row">
+                        <div class="card-action right-align">
+                              <button type="submit" class="btn btn-block btn-success">
+                                <i class="fas fa-check"></i>O'zgarishlarni Saqlash
+                              </button>
+                        </div>
+                        <a href="{% url 'dashboard-patient-list' %}">
+                            <div class="card-action ml-1 right-align">
+                                  <button type="button" class="btn btn-block btn-info">
+                                        <i class="fas fa-home"></i> Listlarga qaytish
+                                  </button>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                </div>
+
+              </form>
+            </div>
+            <!-- /.card -->
+
+
+
+          </div>
+          <!--/.col (left) -->
+          <!-- right column -->
+
+          <!--/.col (right) -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+{% else %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Bemorlar</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+              <li class="breadcrumb-item active">Patients</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-12">
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Bemorlar ro'yxati</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>№</th>
+                    <th>FIO</th>
+                    <th>birth</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in roots %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.FIO }}</td>
+                    <td>{{ i.birth }}</td>
+                    <td>
+                        <a href="{% url 'dashboard-patient-detail' pk=i.id %}" title="To'lliq ma'lumotlarni ko'rish" class="btn btn-info btn-circle btn-sm">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                        <a href="{% url 'dashboard-patient-edit' pk=i.id %}" title="O'zgartirish" class="btn btn-warning btn-circle btn-sm">
+                            <i class="fas fa-pen"></i>
+                        </a>
+                    </td>
+
+                </tr>
+                {% endfor %}
+
+                </tbody>
+
+              </table>
+                <br>
+                <hr>
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if roots.has_previous %}
+                            <a href="?page=1" class="btn btn-primary btn-sm">&laquo;first</a>
+                            <a href="?page={{ roots.previous_page_number }}"  class="btn btn-primary btn-sm">prev</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ roots.number }} of {{ roots.paginator.num_pages }}.
+                        </span>
+
+                        {% if roots.has_next %}
+                            <a href="?page={{ roots.next_page_number }}" class="btn btn-primary btn-sm">next</a>
+                            <a href="?page={{ roots.paginator.num_pages }}" class="btn btn-primary btn-sm">last&raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-xl-6 col-md-6 mb-4">
+                        <a href="{% url 'dashboard-patient-add'%}" class="btn btn-success" >
+                            <span class="icon text-white-50">
+                                <i class="fas fa-check"></i>
+                            </span>
+                            <span class="text">Yangi Bemor qo'shish</span>
+                        </a>
+                        <a href="{% url 'home' %}"  class="btn btn-info" >
+                           <span class="icon text-white-50">
+                                <i class="fas fa-home"></i>
+                            </span>
+                            <span class="text">Bosh Menu</span>
+                       </a>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+
+
+
+
+{% endif %}
+
+
+
+{% endblock %}

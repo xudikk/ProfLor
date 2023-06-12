@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
-from dashboard.models import Doctor, New, Contact
+from dashboard.models import Doctor, New, Contact, Tablets
 from dashboard.forms import *
 
 
@@ -11,7 +11,8 @@ def gets(requests, key, pk=None):
     try:
         Model = {
             "doc": Doctor,
-            "new": New
+            "new": New,
+            "tablet": Tablets,
         }[key]
     except:
         return render(requests, 'dashboard/base.html', {"error": 404})
@@ -42,7 +43,8 @@ def auto_form(requests, key, pk=None):
     try:
         Model = {
             "doc": "Doctor",
-            "new": "New"
+            "new": "New",
+            "tablet": "Tablets",
         }[key]
     except:
         return render(requests, 'dashboard/base.html', {"error": 404})

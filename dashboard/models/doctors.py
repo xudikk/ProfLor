@@ -31,6 +31,7 @@ class Diagnoz(models.Model):
     patient = models.ForeignKey(Patients, on_delete=models.CASCADE)
     name = models.CharField(max_length=512)
     img = models.ImageField(null=True, blank=True, upload_to='diagnoz')
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.patient.FIO} | {self.name}"
@@ -38,7 +39,7 @@ class Diagnoz(models.Model):
 
 class Tablets(models.Model):
     name = models.CharField("Nomi", max_length=128)
-    type = models.CharField("Turi", max_length=50, choices=[
+    type = models.CharField("Turi", max_length=50, default="Tabletka", choices=[
         ('Tomchi', 'Tomchi'),
         ('Tabletka', 'Tabletka'),
         ('Sirop', 'Sirop'),
@@ -47,3 +48,5 @@ class Tablets(models.Model):
 
 class Suggests(models.Model):
     diagnoz = models.ForeignKey(Diagnoz, on_delete=models.CASCADE)
+    tablet = models.ForeignKey(Tablets, on_delete=models.SET_NULL, null=True, blank=True)
+    suggest = models.CharField(max_length=512, null=True, blank=True)

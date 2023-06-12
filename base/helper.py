@@ -1,9 +1,12 @@
 import base64
 import binascii
+from contextlib import closing
 from datetime import datetime
 
-import cv2
 import os
+
+from django.db import connection
+from methodism import dictfetchone
 
 from src.settings import BASE_DIR, MEDIA_PATIENTS
 
@@ -49,6 +52,7 @@ def card_mask(number):
 
 
 def ImageGenerator(fio: str, age, dignoz, suggests: list):
+    import cv2
     path = BASE_DIR.absolute().__str__() + r'\media\blank.png'
     image = cv2.imread(path)
     font = cv2.FONT_ITALIC
@@ -80,3 +84,23 @@ def ImageGenerator(fio: str, age, dignoz, suggests: list):
     cv2.imwrite(os.path.join(MEDIA_PATIENTS, filename), image)
 
     return BASE_DIR.absolute().__str__() + filename
+
+
+def cnts():
+    sql = """
+        SELECT (SELECT COUNT(*)
+        FROM   dashboard_tablets) AS tb,
+        (SELECT COUNT(*)
+        FROM   dashboard_patients) AS patient,
+        (SELECT COUNT(*)
+        FROM   dashboard_doctor) AS docs, 
+        
+        (SELECT COUNT(*) FROM  dashboard_new) AS news
+        FROM dashboard_contact
+        limit 1
+    """
+    with closing(connection.cursor()) as cursor:
+        cursor.execute(sql)
+        res = dictfetchone(cursor)
+
+    return res
