@@ -8,8 +8,6 @@ import os
 from django.db import connection
 from methodism import dictfetchone
 
-from src.settings import BASE_DIR, MEDIA_PATIENTS
-
 
 def code_hashing(key: str, decode=False):
     if decode:
@@ -52,6 +50,8 @@ def card_mask(number):
 
 
 def ImageGenerator(fio: str, age, dignoz, suggests: list):
+    from src.settings import BASE_DIR, MEDIA_PATIENTS
+
     import cv2
     path = BASE_DIR.absolute().__str__() + r'\media\blank.png'
     image = cv2.imread(path)
