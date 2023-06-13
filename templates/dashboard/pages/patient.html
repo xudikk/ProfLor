@@ -9,7 +9,12 @@
 {% if pos == 'one' %}
 
 <div class="content-wrapper">
-
+    <br>
+    <div class="card mb-4 border-left-warning bg-info">
+        <div class="card-body text-center">
+            <h4>Bemor ma'lumotlari sahifasi</h4>
+        </div>
+    </div>
 
 <div class="card mb-4 border-left-warning">
     <div class="card-body">
@@ -24,7 +29,7 @@
 
 
 
-<!--    **********************************************************************************************************  -->
+<!-- *************************************************************************************************************** -->
     <hr class="border-warning" >
 
     <div class="card shadow mb-4">
@@ -53,14 +58,15 @@
                             <td>{{ i.date | date:'d-F, Y' }} Year</td>
 
                             <td>
-                                <a href="" title="Tashisni tahrirlash" class="btn btn-success btn-circle btn-sm">
+                                <a href="{% url 'dashboard-patient-diag-edit' pk=root.id status=1 diag_id=i.id %}" title="Tashisni tahrirlash" class="btn btn-success btn-circle btn-sm">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a href="" title="Tashhis haqida" class="btn btn-info btn-circle btn-sm">
+                                <a href="{% url 'dashboard-diags-detail' pk=i.id %}" title="Tashhis haqida" class="btn btn-info btn-circle btn-sm">
                                     <i class="fas fa-info"></i>
                                 </a>
-                                <a href="" title="Tashhisni ob tashash" class="btn btn-danger btn-circle btn-sm">
-                                    <i class="fas fa-trash"></i>
+
+                                <a href="{% url 'screen-page' pk=i.id %}" title="Generator Sahifa" class="btn btn-primary btn-circle btn-sm">
+                                    <i class="fas fa-download"></i>
                                 </a>
                             </td>
                         </tr>
@@ -78,8 +84,66 @@
         {% endif %}
     </div>
 
+<!-- *************************************************************************************************************** -->
+{% if diag_status == 'form' %}
 <!--    **********************************************************************************************************  -->
+   <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-success">
 
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="card-body">
+                    <h2 class="form-group text-center">Tezkor Forma</h2>
+                    <div class="form-row">
+
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.name %}
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                    <div class="form-row">
+                        <div class="card-action right-align">
+                              <button type="submit" class="btn btn-block btn-success">
+                                <i class="fas fa-check"></i>Saqlash
+                              </button>
+                        </div>
+                        <a href="{% url 'dashboard-patient-detail' pk=root.id %}">
+                            <div class="card-action ml-1 right-align">
+                                  <button type="button" class="btn btn-block btn-info">
+                                        <i class="fas fa-home"></i> Orqaga qaytish
+                                  </button>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                </div>
+
+              </form>
+            </div>
+            <!-- /.card -->
+
+
+
+          </div>
+          <!--/.col (left) -->
+          <!-- right column -->
+
+          <!--/.col (right) -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+
+<!--    **********************************************************************************************************  -->
+    {% endif %}
 
 
 
@@ -101,6 +165,7 @@
             </span>
             <span class="text">Listlarga qaytish</span>
         </a>
+
         <a data-toggle="modal" data-target="#deleteModal" class="btn btn-danger btn-icon-split">
             <span class="icon text-white-50">
                 <i class="fas fa-trash"></i>
@@ -112,6 +177,12 @@
                 <i class="fas fa-home"></i>
             </span>
             <span class="text">Bosh Menu</span>
+        </a>
+        <a href="{% url 'dashboard-patient-diag-add' pk=root.id status=1 %}" class="btn btn-primary btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-check"></i>
+            </span>
+            <span class="text">Yangi Tashhis qo'shish</span>
         </a>
     </div>
 </div>

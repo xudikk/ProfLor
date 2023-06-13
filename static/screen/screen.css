@@ -1,0 +1,110 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.med-paper {
+  padding: 24px 42px;
+  height: 842px;
+  width: 595px;
+  margin: auto;
+  box-shadow: 1px 2px 40px gray;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #FEFEFE;
+}
+.med-paper-top img {
+  width: 400px;
+}
+.address-title {
+  border-bottom: 1px solid black;
+  border-top: 1px solid gray;
+  margin-top: 13px;
+}
+.address-title p {
+  color: rgb(31, 73, 125);
+  text-align: center;
+  font-size: 12px;
+  font-family: "Times New Roman", Times, serif;
+}
+.address-title p span {
+  color: red;
+}
+.consolt-title {
+  text-align: center;
+  font-family: Impact, "Arial Narrow Bold", sans-serif;
+  font-size: 22px;
+  color: rgb(112, 48, 160);
+  letter-spacing: 1px;
+}
+.med-data {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.person-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.person-info h2 {
+  font-family: "Times New Roman Bold", Times, serif;
+  font-size: 18px;
+  font-weight: 900;
+}
+.person-info span {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 18px;
+  font-weight: 200;
+  color: rgb(37, 37, 37);
+}
+
+.med-advice {
+  margin-top: 48px;
+}
+.med-advice h2 {
+  font-size: 18px;
+}
+.med-advice ol {
+  margin-left: 24px;
+  font-size: 18px;
+}
+.med-advice li span {
+  font-weight: 900;
+}
+
+.med-doctor {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.med-doctor h2 {
+  font-size: 18px;
+}
+.med-doctor p {
+  font-size: 18px;
+}
+.med-doctor span {
+  font-weight: 800;
+}
+.med-bottom-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.med-doctor-rec {
+  text-align: center;
+}
+.med-doctor-rec p {
+  font-size: 16px;
+  color: red;
+}
+.med-doctor-rec p span {
+  color: rgb(2, 152, 2);
+}
+.med-doctor-rec h4 {
+  font-size: 18px;
+  color: rgb(31, 73, 125);
+}

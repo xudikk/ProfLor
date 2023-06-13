@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
-from dashboard.models import Doctor, New, Contact, Tablets
+from dashboard.models import Doctor, New, Contact, Diagnoz  # ,  Tablets
 from dashboard.forms import *
 
 
@@ -12,7 +12,7 @@ def gets(requests, key, pk=None):
         Model = {
             "doc": Doctor,
             "new": New,
-            "tablet": Tablets,
+            "diagnoz": Diagnoz,
         }[key]
     except:
         return render(requests, 'dashboard/base.html', {"error": 404})
@@ -44,7 +44,7 @@ def auto_form(requests, key, pk=None):
         Model = {
             "doc": "Doctor",
             "new": "New",
-            "tablet": "Tablets",
+            "diagnoz": "Diagnoz",
         }[key]
     except:
         return render(requests, 'dashboard/base.html', {"error": 404})
@@ -71,19 +71,16 @@ def auto_form(requests, key, pk=None):
 def auto_del(requests, key, pk):
     try:
         Model = {
-            "doc": "Doctor",
-            "new": "New"
+            "doc": Doctor,
+            "new": New,
+            "diagnoz": Diagnoz,
         }[key]
     except:
         return render(requests, 'dashboard/base.html', {"error": 404})
 
-    root = eval(Model).objects.filter(pk=pk).first()
+    root = Model.objects.filter(pk=pk).first()
     if not root:
         ctx = {"error": 404}
         return render(requests, f'dashboard/pages/{key}.html', ctx)
     root.delete()
     return redirect('dashboard-auto-list', key=key)
-
-
-
-

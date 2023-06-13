@@ -77,9 +77,9 @@ def ImageGenerator(fio: str, age, dignoz, suggests: list):
     for i, j in enumerate(suggests, 1):
         word = f"{i}) {j}"
         image = cv2.putText(image, word.translate(tr),
-                            (100, step), font, 0.5, color, thickness, cv2.LINE_AA)
+                            (80, step), font, 0.5, color, thickness, cv2.LINE_AA)
         step += 20
-    date = datetime.now().strftime(f"%d-%m-%Y-%M")
+    date = datetime.now().strftime(f"%d-%m-%Y-%M-")
     filename = date + fio.replace(' ', '') + ".jpg"
     cv2.imwrite(os.path.join(MEDIA_PATIENTS, filename), image)
 
@@ -89,7 +89,7 @@ def ImageGenerator(fio: str, age, dignoz, suggests: list):
 def cnts():
     sql = """
         SELECT (SELECT COUNT(*)
-        FROM   dashboard_tablets) AS tb,
+        FROM   dashboard_diagnoz) AS tb,
         (SELECT COUNT(*)
         FROM   dashboard_patients) AS patient,
         (SELECT COUNT(*)
@@ -104,3 +104,5 @@ def cnts():
         res = dictfetchone(cursor)
 
     return res
+
+

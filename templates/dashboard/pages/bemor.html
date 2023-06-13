@@ -1,0 +1,98 @@
+{% extends 'dashboard/base.html' %}
+{% block title %} Bemor Ma'lumoti {% endblock %}
+{% load static %}
+{% block content %}
+<div class="content-wrapper">
+<br>
+
+
+<div class="med-paper" id="full_body">
+      <div class="med-paper-main">
+        <div class="med-paper-top">
+          <img src="{% static 'screen/logo.png' %}" alt="logo" />
+        </div>
+        <div class="address-title">
+          <p>
+            г.Бухара, ул. Каюм Муртазоев 2/1. Ориентир: Доз-5 (Рубин-Шамс) Тел:
+            +998-(95) 420-01-03; наш канал в телеграмме:
+            <span>t.me/LORvrachBukhara</span>
+          </p>
+        </div>
+        <h3 class="consolt-title">{{ bemor.consult }}</h3>
+        <div class="med-data">
+          <div class="person-info">
+            <h2>
+              {{ bemor.fio }}: <span>{{ root.patient.FIO }}</span>
+            </h2>
+          </div>
+          <div class="person-info">
+            <h2>{{ bemor.age }}: <span>{{ root.patient.birth }}</span></h2>
+          </div>
+          <div class="person-info">
+            <h2>
+              {{ bemor.diagnoz }}:
+              <span>{{ root.name }}</span>
+            </h2>
+            <!-- <p>2х сторонний ХГСО (мезотимпанит) rgthyjfhdfgdfh jklnbtkjbn rejkb ver vkjer rkjl jfthdrgt</p> -->
+          </div>
+        </div>
+        <div class="med-advice">
+          <h2>{{ bemor.suggest }}:</h2>
+          <ol>
+            <li>
+              <span>Симонте</span> (плюс) ёки Милап -10мг 1таб (уйку олдидан)
+              10кун dfghthgf dsgf
+            </li>
+
+          </ol>
+        </div>
+      </div>
+
+      <div class="med-bottom">
+        <div class="med-bottom-top">
+          <div class="med-doctor">
+            <h2>Врач:</h2>
+            <div class="med-doctor-data">
+              <p>Кодиров Ш.Ш.</p> <span>(97) 488-58-00</span>
+
+            </div>
+          </div>
+          <div class="med-doctor">
+            <p>Дата осмотра:</p>
+            <span>{{ date | date:'d/m/Y' }}</span>
+          </div>
+        </div>
+        <div class="med-doctor-rec">
+          <p>
+           {{ bemor.apteka }} <span>@arzonaptekabot</span>
+          </p>
+          <h4>{{ bemor.tuzalish }}</h4>
+        </div>
+      </div>
+    </div>
+    <br>
+<div class="card mb-4 border-bottom-warning">
+    <div class="card-body">
+        <a href="{% url 'change_lang' lang='uz' pk=root.id %}" class="btn btn-info btn-icon-split">
+
+            <span class="text">O'zbek tilida</span>
+        </a>
+        <a href="{% url 'change_lang' lang='ru' pk=root.id %}" class="btn btn-info btn-icon-split">
+
+            <span class="text">Русский</span>
+        </a>
+        <a href="{% url 'change_lang' lang='kr' pk=root.id %}" class="btn btn-info btn-icon-split">
+
+            <span class="text">Крильча</span>
+        </a>
+        <a id="captureBtn" class="btn btn-success btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-download"></i>
+            </span>
+            <span class="text">Yuklab olish</span>
+        </a>
+    </div>
+</div>
+</div>
+
+{% endblock %}

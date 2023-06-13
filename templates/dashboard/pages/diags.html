@@ -1,6 +1,6 @@
 {% extends 'dashboard/base.html' %}
 
-{% block title %}Doctors | View {% endblock %}
+{% block title %}Diags | View {% endblock %}
 {% load bootstrap4 %}
 
 {% block content %}
@@ -10,13 +10,12 @@
 
 <div class="content-wrapper">
     <br>
+
 <div class="card mb-4 border-left-warning bg-info">
-        <div class="card-body text-center">
-            <h4>Dorining ma'lumotlari sahifasi</h4>
-        </div>
+    <div class="card-body text-center">
+        <h4>Diagnoz ma'lumotlari sahifasi</h4>
     </div>
-
-
+</div>
 <div class="card mb-4 border-left-warning">
     <div class="card-body">
         <h4>Nomi: <mark><i>{{ root.name }}</i></mark></h4>
@@ -24,25 +23,147 @@
 </div>
 <div class="card mb-4 border-left-warning">
     <div class="card-body">
-        <h4>Turi: <mark><i>{{ root.type }}</i></mark></h4>
+        <h4>Diagnoz qo'yilgan sana: <mark><i>{{ root.date | date:'d-F, Y' }} Yil</i></mark></h4>
+    </div>
+</div>
+<div class="card mb-4 border-left-warning">
+    <div class="card-body">
+       <h4>Diagnoz qo'yilgan bemor: <mark> <a href="{% url 'dashboard-patient-detail' pk=root.patient.id %}"><i>{{ root.patient.FIO  }} </i></a></mark></h4>
     </div>
 </div>
 
 
+
+<!--    **********************************************************************************************************  -->
+    <hr class="border-warning" >
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-info">Tavsiyalar</h6>
+        </div>
+        {% if suggests %}
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Dori Nomi</th>
+                            <th>Maslahat</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for i in suggests %}
+                        {% if i.id != request.session.user %}
+
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ i.tablet }}</td>
+                            <td>{{ i.suggest }}</td>
+                            <td>
+                                <a href="{% url 'add-suggest' pk=root.id status=1 suggest_id=i.id %}" title="Maslahatni tahrirlash" class="btn btn-success btn-circle btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="" title="Maslahatni olib tashlash" class="btn btn-danger btn-circle btn-sm">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endif %}
+                       {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% else %}
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-danger">Ushbu diagnozga Hech qanday tavsiya yo'q</h6>
+            </div>
+        {% endif %}
+    </div>
+
+<!--    **********************************************************************************************************  -->
+
+
+    {% if suggest_status == 'form' %}
+<!--    **********************************************************************************************************  -->
+   <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-success">
+
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="card-body">
+                    <h2 class="form-group text-center">Tezkor Forma</h2>
+                    <div class="form-row">
+
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.tablet %}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {% bootstrap_field form.suggest %}
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                    <div class="form-row">
+                        <div class="card-action right-align">
+                              <button type="submit" class="btn btn-block btn-success">
+                                <i class="fas fa-check"></i>Saqlash
+                              </button>
+                        </div>
+                        <a href="{% url 'dashboard-diags-detail' pk=root.id %}">
+                            <div class="card-action ml-1 right-align">
+                                  <button type="button" class="btn btn-block btn-info">
+                                        <i class="fas fa-home"></i> Orqaga qaytish
+                                  </button>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                </div>
+
+              </form>
+            </div>
+            <!-- /.card -->
+
+
+
+          </div>
+          <!--/.col (left) -->
+          <!-- right column -->
+
+          <!--/.col (right) -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+
+<!--    **********************************************************************************************************  -->
+    {% endif %}
+
+
+
+
+
+
 <div class="card mb-4 border-bottom-warning">
     <div class="card-body">
-        <a href="{% url 'dashboard-auto-edit' key='tablet' pk=root.id %}" class="btn btn-success btn-icon-split">
+        <a href="{% url 'dashboard-diags-edit' pk=root.id %}" class="btn btn-success btn-icon-split">
             <span class="icon text-white-50">
                 <i class="fas fa-edit"></i>
             </span>
             <span class="text">Tahrirlash</span>
         </a>
-        <a href="{% url 'dashboard-auto-list' key='tablet' %}" class="btn btn-warning btn-icon-split">
-            <span class="icon text-white-50">
-                <i class="fas fa-arrow-left"></i>
-            </span>
-            <span class="text">Listlarga qaytish</span>
-        </a>
+
         <a data-toggle="modal" data-target="#deleteModal" class="btn btn-danger btn-icon-split">
             <span class="icon text-white-50">
                 <i class="fas fa-trash"></i>
@@ -54,6 +175,12 @@
                 <i class="fas fa-home"></i>
             </span>
             <span class="text">Bosh Menu</span>
+        </a>
+        <a href="{% url 'add-suggest' pk=root.id status=1 %}" class="btn btn-primary btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-check"></i>
+            </span>
+            <span class="text">Yangi Tavsiya qo'shish</span>
         </a>
     </div>
 </div>
@@ -75,7 +202,7 @@
             <div class="modal-body">Ro'stdan ham ushbu {{ root.FIO }} ni o'chirmoqchimisz?</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Yo'q</button>
-                <a class="btn btn-primary" href="{% url 'dashboard-auto-delete' key='tablet' pk=root.id %}">Ha</a>
+                <a class="btn btn-primary" href="{% url 'dashboard-diags-delete' pk=root.id %}">Ha</a>
             </div>
         </div>
     </div>
@@ -110,21 +237,21 @@
             <!-- general form elements -->
             <div class="card card-success">
               <div class="card-header">
-                <h3 class="card-title">Quick Example</h3>
+                <h3 class="card-title">Tezkor Forma</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
               <form role="form" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="card-body">
-                    <h2 class="form-group text-center">Doctorlar formasi</h2>
+                    <h2 class="form-group text-center">Bemorlar formasi</h2>
                     <div class="form-row">
 
                         <div class="form-group col-md-4">
-                            {% bootstrap_field form.name %}
+                            {% bootstrap_field form.patient %}
                         </div>
                         <div class="form-group col-md-4">
-                            {% bootstrap_field form.type %}
+                            {% bootstrap_field form.name %}
                         </div>
 
                     </div>
@@ -135,7 +262,7 @@
                                 <i class="fas fa-check"></i>O'zgarishlarni Saqlash
                               </button>
                         </div>
-                        <a href="{% url 'dashboard-auto-list' key='tablet' %}">
+                        <a href="{% url 'dashboard-diags-list' %}">
                             <div class="card-action ml-1 right-align">
                                   <button type="button" class="btn btn-block btn-info">
                                         <i class="fas fa-home"></i> Listlarga qaytish
@@ -171,12 +298,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Dorilar</h1>
+            <h1>Bemorlar</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-              <li class="breadcrumb-item active">Tablets</li>
+              <li class="breadcrumb-item active">diagss</li>
             </ol>
           </div>
         </div>
@@ -190,7 +317,7 @@
 
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Preparatlar ro'yxati ro'yxati</h3>
+              <h3 class="card-title">Bemorlar ro'yxati</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -199,7 +326,8 @@
                 <tr>
                     <th>№</th>
                     <th>Nomi</th>
-                    <th>Turi</th>
+                    <th>Sana</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -207,12 +335,12 @@
                 <tr>
                     <td>{{ forloop.counter }}</td>
                     <td>{{ i.name }}</td>
-                    <td>{{ i.type }}</td>
+                    <td>{{ i.date | date:'d-F, Y' }} Year</td>
                     <td>
-                        <a href="{% url 'dashboard-auto-detail' key='tablet' pk=i.id %}" title="To'lliq ma'lumotlarni ko'rish" class="btn btn-info btn-circle btn-sm">
+                        <a href="{% url 'dashboard-diags-detail' pk=i.id %}" title="To'lliq ma'lumotlarni ko'rish" class="btn btn-info btn-circle btn-sm">
                             <i class="fas fa-info-circle"></i>
                         </a>
-                        <a href="{% url 'dashboard-auto-edit' key='tablet' pk=i.id %}" title="O'zgartirish" class="btn btn-warning btn-circle btn-sm">
+                        <a href="{% url 'dashboard-diags-edit' pk=i.id %}" title="O'zgartirish" class="btn btn-warning btn-circle btn-sm">
                             <i class="fas fa-pen"></i>
                         </a>
                     </td>
@@ -245,11 +373,11 @@
                 <hr>
                 <div class="row">
                     <div class="col-xl-6 col-md-6 mb-4">
-                        <a href="{% url 'dashboard-auto-add' key='tablet' %}" class="btn btn-success" >
+                        <a href="{% url 'dashboard-diags-add'%}" class="btn btn-success" >
                             <span class="icon text-white-50">
                                 <i class="fas fa-check"></i>
                             </span>
-                            <span class="text">Yangi Tabletka qo'shish</span>
+                            <span class="text">Yangi Bemor qo'shish</span>
                         </a>
                         <a href="{% url 'home' %}"  class="btn btn-info" >
                            <span class="icon text-white-50">

@@ -24,6 +24,7 @@
           <a href="{% url 'home' %}"><b>ProfLor</b>Dashboard</a>
         </div>
         <!-- User name -->
+        <!--   {{ request.session.otp }}  -->
         <div class="lockscreen-name">Eshmatjon Toshmatov ({{ request.session.otp }})</div>
         <div class="lockscreen-name" style="color: red;"> {{ error }}</div>
         <br>
