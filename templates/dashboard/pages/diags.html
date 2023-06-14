@@ -13,25 +13,9 @@
 
 <div class="card mb-4 border-left-warning bg-info">
     <div class="card-body text-center">
-        <h4>Diagnoz ma'lumotlari sahifasi</h4>
+        <h4> Bemor: <mark>{{ root.patient.FIO  }}</mark> | Diagnoz: <mark>{{ root.name }}</mark> </h4>
     </div>
 </div>
-<div class="card mb-4 border-left-warning">
-    <div class="card-body">
-        <h4>Nomi: <mark><i>{{ root.name }}</i></mark></h4>
-    </div>
-</div>
-<div class="card mb-4 border-left-warning">
-    <div class="card-body">
-        <h4>Diagnoz qo'yilgan sana: <mark><i>{{ root.date | date:'d-F, Y' }} Yil</i></mark></h4>
-    </div>
-</div>
-<div class="card mb-4 border-left-warning">
-    <div class="card-body">
-       <h4>Diagnoz qo'yilgan bemor: <mark> <a href="{% url 'dashboard-patient-detail' pk=root.patient.id %}"><i>{{ root.patient.FIO  }} </i></a></mark></h4>
-    </div>
-</div>
-
 
 
 <!--    **********************************************************************************************************  -->
