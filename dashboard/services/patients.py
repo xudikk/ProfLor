@@ -14,7 +14,7 @@ from dashboard.forms import PatientsForm, DiagnozForm
 def patients(requests, pk=None, status=None, diag_id=None):
     if pk:
         root = Patients.objects.filter(pk=pk).first()
-        diags = Diagnoz.objects.filter(patient=root)
+        diags = Diagnoz.objects.filter(patient=root).order_by('-pk')
         if not root:
             return render(requests, 'dashboard/base.html', {'error': 404})
 
