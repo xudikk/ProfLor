@@ -2,6 +2,8 @@
 {% block title %} Bemor Ma'lumoti {% endblock %}
 {% load static %}
 {% block content %}
+
+
 <div class="content-wrapper">
 <br>
 
@@ -37,12 +39,13 @@
           </div>
         </div>
         <div class="med-advice">
-          <h2>{{ bemor.suggest }}:</h2>
+          <h2><b>{{ bemor.suggest }}</b>:</h2>
           <ol>
+              {% for i in suggests %}
             <li>
-              <span>Симонте</span> (плюс) ёки Милап -10мг 1таб (уйку олдидан)
-              10кун dfghthgf dsgf
+              <span>{{ i.tablet }}</span> {{ i.suggest }}
             </li>
+              {% endfor %}
 
           </ol>
         </div>
@@ -51,14 +54,14 @@
       <div class="med-bottom">
         <div class="med-bottom-top">
           <div class="med-doctor">
-            <h2>Врач:</h2>
+            <h2><b>Врач</b>:</h2>
             <div class="med-doctor-data">
               <p>Кодиров Ш.Ш.</p> <span>(97) 488-58-00</span>
 
             </div>
           </div>
           <div class="med-doctor">
-            <p>Дата осмотра:</p>
+            <p><b>Дата осмотра</b>:</p>
             <span>{{ date | date:'d/m/Y' }}</span>
           </div>
         </div>
@@ -85,7 +88,7 @@
 
             <span class="text">Крильча</span>
         </a>
-        <a id="captureBtn" class="btn btn-success btn-icon-split">
+        <a id="captureBtn"  class="btn btn-success btn-icon-split">
             <span class="icon text-white-50">
                 <i class="fas fa-download"></i>
             </span>

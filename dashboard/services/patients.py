@@ -6,7 +6,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 
 from base.texts import BEMOR
-from dashboard.models import Patients, Diagnoz
+from dashboard.models import Patients, Diagnoz, Suggests
 from dashboard.forms import PatientsForm, DiagnozForm
 
 
@@ -103,11 +103,12 @@ def generator_screen(requests, pk):
     bemor = {}
     for i in BEMOR.keys():
         bemor[i] = BEMOR[i][requests.session.get('lang', 'kr')]
-
+    suggests = Suggests.objects.filter(diagnoz=root)
     ctx = {
         "bemor": bemor,
         "root": root,
-        "date": datetime.datetime.today()
+        "date": datetime.datetime.today(),
+        "suggests": suggests
     }
 
     return render(requests, f'dashboard/pages/bemor.html', ctx)
