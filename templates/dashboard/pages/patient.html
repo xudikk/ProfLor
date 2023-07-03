@@ -12,7 +12,7 @@
     <br>
     <div class="card mb-4 border-left-warning bg-info">
         <div class="card-body text-center">
-            <h4>Bemor: {{ root.FIO }} {{ root.birth }}</h4>
+            <h4>Bemor: <mark>{{ root.FIO }}</mark>  Yil:  <mark>{{ root.birth }}</mark></h4>
         </div>
     </div>
 
@@ -141,7 +141,7 @@
 
 
 
-
+{% if diag_status != 'form' %}
 <div class="card mb-4 border-bottom-warning">
     <div class="card-body">
         <a href="{% url 'dashboard-patient-edit' pk=root.id %}" class="btn btn-success btn-icon-split">
@@ -173,11 +173,11 @@
             <span class="icon text-white-50">
                 <i class="fas fa-check"></i>
             </span>
-            <span class="text">Yangi Tashhis qo'shish</span>
+            <span class="text">Yangi Diagnoz qo'shish</span>
         </a>
     </div>
 </div>
-
+{% endif %}
 
 </div>
 

@@ -89,6 +89,9 @@
                     <h2 class="form-group text-center">Tezkor Forma</h2>
                     <div class="form-row">
 
+                        <div class="form-group col-md-4" hidden>
+                            {% bootstrap_field form.diagnoz %}
+                        </div>
                         <div class="form-group col-md-4">
                             {% bootstrap_field form.tablet %}
                         </div>
@@ -138,7 +141,7 @@
 
 
 
-
+    {% if suggest_status != 'form' %}
 <div class="card mb-4 border-bottom-warning">
     <div class="card-body">
         <a href="{% url 'home' %}" class="btn btn-info btn-icon-split">
@@ -175,6 +178,7 @@
         </a>
     </div>
 </div>
+    {% endif %}
 </div>
 
 <!-- Delete Modal-->

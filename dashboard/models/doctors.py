@@ -36,16 +36,23 @@ class Diagnoz(models.Model):
         return f"{self.patient.FIO} | {self.name}"
 
 
-# class Tablets(models.Model):
-#     name = models.CharField("Nomi", max_length=128)
-#     type = models.CharField("Turi", max_length=50, default="Tabletka", choices=[
-#         ('Tomchi', 'Tomchi'),
-#         ('Tabletka', 'Tabletka'),
-#         ('Sirop', 'Sirop'),
-#     ])
+class Tablets(models.Model):
+    name = models.CharField("Nomi", max_length=128)
+    type = models.CharField("Turi", max_length=50, default="Tabletka", choices=[
+        ('Tomchi', 'Tomchi'),
+        ('Tabletka', 'Tabletka'),
+        ('Sirop', 'Sirop'),
+    ])
+
+    def __str__(self):
+        return self.name
 
 
 class Suggests(models.Model):
     diagnoz = models.ForeignKey(Diagnoz, on_delete=models.CASCADE)
-    tablet = models.CharField("Dorining Nomi", max_length=256)
+    tablet = models.ForeignKey(Tablets, on_delete=models.SET_NULL, null=True)
     suggest = models.CharField("Maslahat", max_length=512, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.tablet} {self.suggest}"
+

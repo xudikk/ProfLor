@@ -21,14 +21,22 @@ def diagnozs(requests, pk=None, status=None, suggest_id=None):
         }
         if status == 1:
             suggest = Suggests.objects.filter(pk=suggest_id).first()
-            form = SuggestForm(instance=suggest)
+            form = SuggestForm(instance=suggest, diagnoz=root)
             if requests.POST:
-                if not suggest:
-                    suggest = Suggests()
-                suggest.diagnoz = root
-                suggest.suggest = requests.POST.get('suggest', suggest.suggest)
-                suggest.tablet = requests.POST.get('tablet', suggest.tablet)
-                suggest.save()
+                print(requests.POST)
+                forms = SuggestForm(requests.POST, instance=suggest, diagnoz=root)
+                forms.diagnoz = root
+                if forms.is_valid():
+                    forms.save()
+                else:
+                    print(forms.errors)
+
+                # if not suggest:
+                #     suggest = Suggests()
+                # suggest.diagnoz = root
+                # suggest.suggest = requests.POST.get('suggest', suggest.suggest)
+                # suggest.tablet = requests.POST.get('tablet', suggest.tablet)
+                # suggest.save()
                 return redirect('dashboard-diags-detail', pk=pk)
 
             ctx['form'] = form
